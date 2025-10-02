@@ -284,6 +284,26 @@ def test_given_negative_start_or_endpoint_then_we_fail(start, end):
     ):
         create_recognizer_result("entity", 0, start, end)
 
+@pytest.mark.parametrize(
+    "self_start, self_end, other_start, other_end, expected",
+    [
+        #test no overlap
+        (0, 4, 5, 11, 0),
+        #test full overlap
+        (0, 10, 0, 10, 10),
+        #partial overlaps
+        (0, 4, 2, 6, 2),
+        (2, 6, 0, 4, 2),
+        #complete containment
+        (0, 10, 0, 5, 5),
+        #Exact touch boundaries
+        (0, 0, 0, 0, 0),
+    ],
+)
+def test_intersects(self_start: int, self_end: int, other_start: int, other_end: int, expected: int):
+    tester1 = RecognizerResult("entity", self_start, self_end, 0)
+    tester2 = RecognizerResult("entity2", other_start, other_end, 0)
+    assert tester1.intersects(tester2) == expected
 
 def create_recognizer_result(entity_type: str, score: float, start: int, end: int):
     data = {"entity_type": entity_type, "score": score, "start": start, "end": end}
