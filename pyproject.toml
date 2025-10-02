@@ -66,3 +66,17 @@ line-ending = "auto"
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.poetry]
+name = "lab6"
+version = "0.1.0"
+description = ""
+authors = ["Chris Wainwright"]
+
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-cov = "^5.0.0"
